@@ -1035,10 +1035,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
-"@kiip/core@0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@kiip/core/-/core-0.2.3.tgz#5e82e5714559b9d87fb0c5f05b1ef43109d10926"
-  integrity sha512-K0NEiweMa24Yc9lykGpRlP5F/Y/Tpu15pQ44IFomLnYtZrlYBnf3h88F11J55RNuS3SJrLXOmTMVJ5N6AOD8NQ==
+"@kiip/core@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@kiip/core/-/core-0.3.0.tgz#3539a9196f60522896c73dd8d3f95de584dc28c1"
+  integrity sha512-dMAJrnqgcW4B0fCDDEKlU1KJCHJxn5ap+iBs+DXgwC84eXHUJTSkSVBAC2g57AA4JjBPUhVq4irs6e+62929Fg==
   dependencies:
     nanoid "^3.1.10"
     suub "^3.0.0"
