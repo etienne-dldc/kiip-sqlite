@@ -18,10 +18,7 @@ interface DatabaseDocument {
   meta: string;
 }
 
-export function KiipSQLite(
-  path: string,
-  options: Options = {}
-): KiipDatabase<Transaction, unknown> {
+export function KiipSQLite(path: string, options: Options = {}): KiipDatabase<Transaction> {
   const db = new Database(path, {
     ...options,
     readonly: false
@@ -48,8 +45,7 @@ export function KiipSQLite(
 
   const insertFragmentQuery = db.prepare<DatabaseFragment>(
     `INSERT INTO fragments (document_id, timestamp, table_name, row, column, value)
-     VALUES (@document_id, @timestamp, @table_name, @row, @column, @value)
-     ON CONFLICT DO NOTHING`
+     VALUES (@document_id, @timestamp, @table_name, @row, @column, @value)`
   );
 
   const beginQuery = db.prepare('BEGIN');
@@ -120,9 +116,8 @@ export function KiipSQLite(
       return createKiipCallbackSync(() => {
         const doc: DatabaseDocument = findDocumentQuery.get(documentId);
         if (!doc) {
-          throw new Error(`Cannot find document ${documentId}`);
+          return;
         }
-        console.log({ doc });
         return {
           id: doc.id,
           nodeId: doc.node_id,
@@ -133,7 +128,6 @@ export function KiipSQLite(
     getDocuments(_, onResolve) {
       return createKiipCallbackSync(() => {
         const docs: Array<DatabaseDocument> = findDocumentsQuery.all();
-        console.log({ docs });
         return docs.map(doc => ({
           id: doc.id,
           nodeId: doc.node_id,

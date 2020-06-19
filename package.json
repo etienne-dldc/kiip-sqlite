@@ -14,7 +14,7 @@
   "license": "MIT",
   "author": "Etienne Dldc <e.deladonchamps@gmail.com>",
   "main": "index.js",
-  "module": "dist/kiip.sqlite.esm.js",
+  "module": "dist/sqlite.esm.js",
   "typings": "dist/index.d.ts",
   "directories": {
     "example": "examples",
@@ -36,7 +36,7 @@
     "better-sqlite3": "^7.1.0"
   },
   "devDependencies": {
-    "@kiip/core": "0.3.0",
+    "@kiip/core": "0.4.2",
     "@types/better-sqlite3": "^5.4.0",
     "@types/jest": "^26.0.0",
     "codecov": "^3.6.5",
@@ -49,6 +49,6 @@
     "typescript": "^3.9.2"
   },
   "peerDependencies": {
-    "@kiip/core": "0.3.0"
+    "@kiip/core": "0.4.2"
   }
 }
