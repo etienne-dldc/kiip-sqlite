@@ -1,20 +1,20 @@
 {
-  "name": "package-template",
-  "version": "0.0.0",
-  "description": "",
+  "name": "@kiip/sqlite",
+  "version": "0.1.0",
+  "description": "Sqlite Database layer for kiip",
   "keywords": [],
-  "homepage": "https://github.com/etienne-dldc/package-template#readme",
+  "homepage": "https://github.com/etienne-dldc/kiip-sqlite#readme",
   "bugs": {
-    "url": "https://github.com/etienne-dldc/package-template/issues"
+    "url": "https://github.com/etienne-dldc/kiip-sqlite/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/etienne-dldc/package-template.git"
+    "url": "git+ssh://git@github.com/etienne-dldc/kiip-sqlite.git"
   },
   "license": "MIT",
   "author": "Etienne Dldc <e.deladonchamps@gmail.com>",
   "main": "index.js",
-  "module": "dist/package-template.esm.js",
+  "module": "dist/kiip.sqlite.esm.js",
   "typings": "dist/index.d.ts",
   "directories": {
     "example": "examples",
@@ -28,16 +28,27 @@
     "codecov": "codecov",
     "pub": "yarn build && np",
     "start": "tsdx watch",
-    "test": "tsdx test --coverage"
+    "test": "tsdx test --coverage",
+    "start-example": "parcel watch ./example/index.ts --target node",
+    "run-example": "node ./dist/index.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "better-sqlite3": "^7.1.0"
+  },
   "devDependencies": {
+    "@kiip/core": "0.2.3",
+    "@types/better-sqlite3": "^5.4.0",
     "@types/jest": "^26.0.0",
     "codecov": "^3.6.5",
     "core-js": "3.6.5",
+    "nodemon": "^2.0.4",
     "np": "^6.2.3",
+    "parcel-bundler": "^1.12.4",
     "tsdx": "^0.13.2",
     "tslib": "^2.0.0",
     "typescript": "^3.9.2"
+  },
+  "peerDependencies": {
+    "@kiip/core": "0.2.3"
   }
 }
