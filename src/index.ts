@@ -1,5 +1,6 @@
-import { KiipDatabase, KiipDocument, createKiipCallbackSync, createKiipPromise } from '@kiip/core';
+import { KiipDatabase, createKiipCallbackSync, createKiipPromise, KiipDocument } from '@kiip/core';
 import Database, { Options } from 'better-sqlite3';
+import { Subscription } from 'suub';
 
 export type Transaction = null;
 
@@ -79,7 +80,20 @@ export function KiipSQLite(path: string, options: Options = {}): KiipDatabase<Tr
      WHERE id = @document_id LIMIT 1`
   );
 
+  const documentsSub = Subscription<Array<KiipDocument<unknown>>>();
+  const documentSub = Subscription<KiipDocument<unknown>>();
+
   return {
+    subscribeDocuments(callback) {
+      return documentsSub.subscribe(callback);
+    },
+    subscribeDocument(documentId, callback) {
+      return documentSub.subscribe(doc => {
+        if (doc.id === documentId) {
+          callback(doc);
+        }
+      });
+    },
     withTransaction(exec) {
       return createKiipPromise(resolve => {
         beginQuery.run();
@@ -96,6 +110,13 @@ export function KiipSQLite(path: string, options: Options = {}): KiipDatabase<Tr
           node_id: document.nodeId,
           meta: serializeValue(document.meta)
         });
+        const docs: Array<DatabaseDocument> = findDocumentsQuery.all();
+        const allDocs = docs.map(doc => ({
+          id: doc.id,
+          nodeId: doc.node_id,
+          meta: deserializeValue(doc.meta)
+        }));
+        documentsSub.emit(allDocs);
       }, onResolve);
     },
     addFragments(_tx, fragments, onResolve) {
@@ -180,6 +201,12 @@ export function KiipSQLite(path: string, options: Options = {}): KiipDatabase<Tr
     setMetadata(_, documentId, meta, onResolve) {
       return createKiipCallbackSync(() => {
         setMetaQuery.run({ document_id: documentId, meta: serializeValue(meta) });
+        const doc: DatabaseDocument = findDocumentQuery.get(documentId);
+        documentSub.emit({
+          id: doc.id,
+          nodeId: doc.node_id,
+          meta: deserializeValue(doc.meta)
+        });
       }, onResolve);
     }
   };
