@@ -207,6 +207,13 @@ export function KiipSQLite(path: string, options: Options = {}): KiipDatabase<Tr
           nodeId: doc.node_id,
           meta: deserializeValue(doc.meta)
         });
+        const docs: Array<DatabaseDocument> = findDocumentsQuery.all();
+        const allDocs = docs.map(doc => ({
+          id: doc.id,
+          nodeId: doc.node_id,
+          meta: deserializeValue(doc.meta)
+        }));
+        documentsSub.emit(allDocs);
       }, onResolve);
     }
   };
