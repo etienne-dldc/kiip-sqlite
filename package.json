@@ -1,6 +1,6 @@
 {
   "name": "@kiip/sqlite",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Sqlite Database layer for kiip",
   "keywords": [],
   "homepage": "https://github.com/etienne-dldc/kiip-sqlite#readme",
